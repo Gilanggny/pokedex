@@ -9,9 +9,8 @@ const Detail = props => {
   }, []);
 
   const fetchPokemonDetails = () => {
-    const {params} = props;
-    console.log(params)
-    fetch(`https://pokeapi.co/api/v2/pokemon/${state.params.pokemon}`)
+    const {params} = props.route;
+    fetch(`https://pokeapi.co/api/v2/pokemon/${params.pokemon}`)
       .then(res => res.json())
       .then(details => setDetails(details));
   };
