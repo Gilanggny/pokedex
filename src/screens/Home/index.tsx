@@ -47,13 +47,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerContainer: {
-
+    ...Gs.flexRow,
+    ...Gs.itemsCenter,
+    ...Gs.justifyBetween,
+    padding: 24,
   },
   profileContainer: {
-
+    width: 50,
+    height: 50,
+    marginRight: 10,
   },
   iconContainer: {
-
+    
   },
 });
 

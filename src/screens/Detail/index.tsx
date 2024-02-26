@@ -1,24 +1,60 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import BottomNav from '../../components/BottomNav';
+import React, {useState, useEffect} from 'react';
+import {View, Text, Image, StyleSheet, ActivityIndicator} from 'react-native';
 
+const Detail = props => {
+  const [details, setDetails] = useState([]);
 
-function Detail(): JSX.Element {
-  return (
-    <View style={styles.container}>
-      <Text>Details</Text>
-      <BottomNav />
+  useEffect(() => {
+    fetchPokemonDetails();
+  }, []);
+
+  const fetchPokemonDetails = () => {
+    const {params} = props;
+    console.log(params)
+    fetch(`https://pokeapi.co/api/v2/pokemon/${state.params.pokemon}`)
+      .then(res => res.json())
+      .then(details => setDetails(details));
+  };
+
+  return details.name ? (
+    <View style={{flex: 1, alignItems: 'center'}}>
+      <Image
+        style={styles.image}
+        source={{
+          uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${
+            details.name
+          }.png`,
+        }}
+      />
+      <Text style={styles.text}>Name: {details.name}</Text>
+      <Text style={styles.text}>Height: {details.height}</Text>
+      <Text style={styles.text}>Weight: {details.weight}</Text>
+      <Text style={styles.text}>
+        Ability: {details.abilities[0].ability.name}
+      </Text>
+      <Text style={styles.text}>Type: {details.types[0].type.name}</Text>
+    </View>
+  ) : (
+    <View style={styles.indicator}>
+      <ActivityIndicator size="large" color="#E63F34" />
     </View>
   );
-}
+};
+
+export default Detail;
 
 const styles = StyleSheet.create({
-  container: {
+  image: {
+    width: 200,
+    height: 200,
+  },
+  text: {
+    fontSize: 22,
+    marginBottom: 15,
+  },
+  indicator: {
     flex: 1,
-    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
-
-export default Detail;
